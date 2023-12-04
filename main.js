@@ -38,8 +38,10 @@ const BOARD_LAYOUT = [
     [R, KT, B, Q, KG, B, KT, R]
 ]
 
-const SELECTED_COLOR = "#5bd10d"
-const PROSPECT_COLOR = "#0CDDF0"
+const SELECTED_COLOR_LIGHT = "#79c746"
+const SELECTED_COLOR_DARK = "#347508"
+const PROSPECT_COLOR_LIGHT = "#64d8e3"
+const PROSPECT_COLOR_DARK = "#077f8a"
 
 class Tile{
     constructor(row, col, node){
@@ -97,6 +99,10 @@ function clearSelection(){
     prospectTiles = []
 }
 
+function isEvenTile(row, col){
+    return (row + col)%2 !== 0
+}
+
 function onTileClicked(event){
     const clickedTileNode = event.target.tagName.toLowerCase() === "img" ? event.target.parentNode : event.target
 
@@ -110,15 +116,23 @@ function onTileClicked(event){
         }
 
         selectedTile = new Tile(clickedRow, clickedCol, clickedTileNode)
-        clickedTileNode.style.backgroundColor = SELECTED_COLOR
+        if(isEvenTile(clickedRow, clickedCol)){
+            clickedTileNode.style.backgroundColor = SELECTED_COLOR_DARK
+        }else{
+            clickedTileNode.style.backgroundColor = SELECTED_COLOR_LIGHT
+        }
 
-        for(let prospectRow = 1; prospectRow <= 7; prospectRow++){
-            for(let prospectCol = 1; prospectCol <= 7; prospectCol++){
+        for(let prospectRow = 0; prospectRow <= 7; prospectRow++){
+            for(let prospectCol = 0; prospectCol <= 7; prospectCol++){
                 if(clickedPiece.canMoveToTile(clickedRow, clickedCol, prospectRow, prospectCol, board)){
-                    const prospectNode = getTileNode(prospectRow, prospectCol)
+                    const prospectTileNode = getTileNode(prospectRow, prospectCol)
+                    prospectTiles.push(new Tile(prospectRow, prospectCol, prospectTileNode))
 
-                    prospectTiles.push(new Tile(prospectRow, prospectCol, prospectNode))
-                    prospectNode.style.backgroundColor = PROSPECT_COLOR
+                    if(isEvenTile(prospectRow, prospectCol)){
+                        prospectTileNode.style.backgroundColor = PROSPECT_COLOR_DARK
+                    }else{
+                        prospectTileNode.style.backgroundColor = PROSPECT_COLOR_LIGHT
+                    }
                 }
             }
         }
