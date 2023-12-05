@@ -30,7 +30,7 @@ PIECE_CLASSES[KG] = King
 const BOARD_LAYOUT = [
     [CQ, CQ, CQ, CQ, CQ, CQ, CQ, CQ],
     [C, C, C, C, C, C, C, C],
-    [E, E, E, E, E, E, E, E],
+    [C, C, C, C, C, C, C, C],
     [E, E, E, E, E, E, E, E],
     [E, E, E, E, E, E, E, E],
     [E, E, E, E, E, E, E, E],
