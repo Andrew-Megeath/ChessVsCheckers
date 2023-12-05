@@ -12,7 +12,7 @@ class King{
         const absRowDiff = Math.abs(targetRow - currentRow)
         const absColDiff = Math.abs(targetCol - currentCol)
 
-        return (absRowDiff === 1 && absColDiff <= 1) || (absColDiff ===1 && absRowDiff <= 1)
+        return (absRowDiff === 1 && absColDiff <= 1) || (absColDiff === 1 && absRowDiff <= 1)
     }
 
     moveToTile(currentRow, currentCol, targetRow, targetCol, board){

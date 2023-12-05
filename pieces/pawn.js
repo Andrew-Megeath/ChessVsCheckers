@@ -13,7 +13,8 @@ class Pawn{
         if(board[targetRow][targetCol]){
             return board[targetRow][targetCol].isChecker && rowDiff === -1 && Math.abs(colDiff) === 1
         }else{
-            return ((this.firstMove && rowDiff === -2) || rowDiff === -1) && colDiff === 0
+            return ((this.firstMove && rowDiff === -2 && !board[currentRow - 1][currentCol]) || rowDiff === -1)
+                && colDiff === 0
         }
     }
 

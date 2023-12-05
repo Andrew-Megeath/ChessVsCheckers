@@ -28,7 +28,7 @@ PIECE_CLASSES[Q] = Queen
 PIECE_CLASSES[KG] = King
 
 const BOARD_LAYOUT = [
-    [C, C, C, CQ, CQ, C, C, C],
+    [CQ, CQ, CQ, CQ, CQ, CQ, CQ, CQ],
     [C, C, C, C, C, C, C, C],
     [E, E, E, P, E, E, E, E],
     [E, E, E, E, E, E, E, E],
@@ -52,7 +52,8 @@ class Tile{
 }
 
 let board = null
-let checkerTurn = true
+let numTurns = 0
+let numCheckers = 0
 let selectedTile = null
 let prospectTiles = []
 
@@ -70,8 +71,10 @@ function renderEmpty(tileNode){
 
 function startNewGame(){
     board = new Array(8)
-    checkerTurn = true
+    numTurns = 0
+    numCheckers = 0
     selectedTile = null
+    prospectTiles = []
 
     for(let row = 0; row <= 7; row++){
         board[row] = new Array(8)
@@ -81,8 +84,14 @@ function startNewGame(){
 
             if(BOARD_LAYOUT[row][col]){
                 const pieceName = BOARD_LAYOUT[row][col]
-                board[row][col] = new PIECE_CLASSES[pieceName]()
+                const piece = new PIECE_CLASSES[pieceName]()
+
+                board[row][col] = piece
                 renderPiece(tileNode, pieceName)
+
+                if(piece.isChecker){
+                    numCheckers++
+                }
             }else{
                 renderEmpty(tileNode)
             }
@@ -103,6 +112,10 @@ function isEvenTile(row, col){
     return (row + col)%2 !== 0
 }
 
+function isCheckerTurn(){
+    return numTurns%2 === 0
+}
+
 function onTileClicked(event){
     const clickedTileNode = event.target.tagName.toLowerCase() === "img" ? event.target.parentNode : event.target
 
@@ -110,7 +123,7 @@ function onTileClicked(event){
     const clickedCol = Number(clickedTileNode.id.slice(2, 3))
     const clickedPiece = board[clickedRow][clickedCol]
 
-    if(clickedPiece && clickedPiece.isChecker === checkerTurn){
+    if(clickedPiece && clickedPiece.isChecker === isCheckerTurn()){
         if(selectedTile){
             clearSelection()
         }
@@ -143,13 +156,22 @@ function onTileClicked(event){
             const capture = selectedPiece.moveToTile(selectedTile.row, selectedTile.col, clickedRow, clickedCol, board)
             if(capture){
                 renderEmpty(getTileNode(capture.row, capture.col))
+
+                if(capture.piece.isChecker){
+                    numCheckers--
+                    if(numCheckers === 0){
+                        //todo
+                    }
+                }else if(capture.piece.name === KG){
+                    //todo
+                }
             }
 
             renderPiece(clickedTileNode, board[clickedRow][clickedCol].name)
             renderEmpty(selectedTile.node)
             clearSelection()
 
-            checkerTurn = !checkerTurn
+            numTurns++
         }
     }
 
