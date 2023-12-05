@@ -27,15 +27,26 @@ PIECE_CLASSES[R] = Rook
 PIECE_CLASSES[Q] = Queen
 PIECE_CLASSES[KG] = King
 
-const BOARD_LAYOUT = [
+/*const BOARD_LAYOUT = [
     [CQ, CQ, CQ, CQ, CQ, CQ, CQ, CQ],
     [C, C, C, C, C, C, C, C],
-    [E, E, E, P, E, E, E, E],
+    [E, E, E, E, E, E, E, E],
     [E, E, E, E, E, E, E, E],
     [E, E, E, E, E, E, E, E],
     [E, E, E, E, E, E, E, E],
     [P, P, P, P, P, P, P, P],
     [R, KT, B, Q, KG, B, KT, R]
+]*/
+
+const BOARD_LAYOUT = [
+    [E, E, E, E, E, E, E, E],
+    [E, E, E, E, E, E, E, E],
+    [E, E, E, CQ, E, E, E, E],
+    [E, E, E, E, E, E, E, E],
+    [E, E, E, E, KG, E, E, E],
+    [E, E, E, E, E, E, E, E],
+    [E, E, E, E, E, E, E, E],
+    [E, E, E, E, E, E, E, E],
 ]
 
 const SELECTED_COLOR_LIGHT = "#79c746"
@@ -51,6 +62,10 @@ class Tile{
     }
 }
 
+let turnNode = null
+let numTurnsValNode = null
+
+let gameRunning = false
 let board = null
 let numTurns = 0
 let numCheckers = 0
@@ -70,6 +85,7 @@ function renderEmpty(tileNode){
 }
 
 function startNewGame(){
+    gameRunning = true
     board = new Array(8)
     numTurns = 0
     numCheckers = 0
@@ -97,8 +113,11 @@ function startNewGame(){
             }
         }
     }
+}
 
-
+function endGame(winner){
+    gameRunning = false
+    turnNode.innerHTML = winner + " wins!"
 }
 
 function clearSelection(){
@@ -117,6 +136,10 @@ function isCheckerTurn(){
 }
 
 function onTileClicked(event){
+    if(!gameRunning){
+        return
+    }
+
     const clickedTileNode = event.target.tagName.toLowerCase() === "img" ? event.target.parentNode : event.target
 
     const clickedRow = Number(clickedTileNode.id.slice(0, 1))
@@ -160,10 +183,10 @@ function onTileClicked(event){
                 if(capture.piece.isChecker){
                     numCheckers--
                     if(numCheckers === 0){
-                        //todo
+                        endGame("Chess")
                     }
                 }else if(capture.piece.name === KG){
-                    //todo
+                    endGame("Checkers")
                 }
             }
 
@@ -171,12 +194,29 @@ function onTileClicked(event){
             renderEmpty(selectedTile.node)
             clearSelection()
 
-            numTurns++
+            if(gameRunning){
+                numTurnsValNode.innerHTML = ++numTurns
+                turnNode.innerHTML = isCheckerTurn() ? "Checkers' turn" : "Chess's turn"
+            }
         }
     }
-
 }
 
-document.querySelectorAll(".tile").forEach(tile => {tile.addEventListener("click", onTileClicked)})
+function onResetClicked(_event){
+    document.querySelectorAll(".tile").forEach(tile => tile.style.backgroundColor = null)
 
-startNewGame()
+    turnNode.innerHTML = "Checkers' turn"
+    numTurnsValNode.innerHTML = "0"
+
+    startNewGame()
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+    turnNode = document.getElementById("turn")
+    numTurnsValNode = document.getElementById("numTurnsVal")
+
+    document.querySelectorAll(".tile").forEach(tile => {tile.addEventListener("click", onTileClicked)})
+    document.getElementById("reset").addEventListener("click", onResetClicked)
+
+    startNewGame()
+})
