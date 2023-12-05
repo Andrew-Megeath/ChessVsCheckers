@@ -22,6 +22,10 @@ body {
     color: #5376b0;
 }
 
+#game {
+    margin: auto;
+}
+
 #board {
     width: 45%;
     margin: auto;
@@ -59,5 +63,26 @@ body {
 }
 
 #panel {
-    float: right;
+    width: 12%;
+    margin-left: 75%;
+    padding: 1%;
+    background-color: #e4e4e4;
+    font-size: 100%;
+    font-family: "Monaco";
+}
+
+#numTurns {
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+#reset {
+    display: flex;
+    justify-content: center;
+    color: #f3f3f3;
+    background-color: #d81515;
+}
+
+#reset:hover {
+    background-color: #951010;
 }
