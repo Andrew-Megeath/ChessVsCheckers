@@ -1,22 +1,30 @@
 body {
     height: 100vh;
-    background-image: url("images/background.jpg");
-    background-size: cover;
+    background-image: url("resources/Background.png");
+    background-repeat: repeat;
     overflow: hidden;
 }
 
-#turn {
+#title {
     text-align: center;
+    height: 10%;
     margin-top: 1%;
-    font-size: 30px;
-    font-family: "Lucida Handwriting", cursive;
+    font-size: 300%;
+    font-family: "Monaco";
     font-weight: bold;
 }
 
+#chessWord {
+    color: #d2b702;
+}
+
+#checkersWord {
+    color: #5376b0;
+}
+
 #board {
-    width: 50%;
+    width: 45%;
     margin: auto;
-    margin-top: 1%;
 }
 
 .tile {
