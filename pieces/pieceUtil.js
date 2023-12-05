@@ -22,6 +22,45 @@ function omniCheckerCanMoveToTile(currentRow, currentCol, targetRow, targetCol, 
     }
 }
 
+function rangerCanMoveToTile(condition, currentRow, currentCol, targetRow, targetCol, board){
+    const rowDiff = targetRow - currentRow
+    const colDiff = targetCol - currentCol
+
+    if(condition(rowDiff, colDiff)){
+        const rowInc = Math.sign(rowDiff)
+        const colInc = Math.sign(colDiff)
+        let stepRow = currentRow
+        let stepCol = currentCol
+
+        while(stepRow !== targetRow || stepCol !== targetCol){
+            stepRow += rowInc
+            stepCol += colInc
+
+            if(board[stepRow][stepCol]){
+                return stepRow === targetRow && stepCol === targetCol && board[stepRow][stepCol].isChecker
+            }
+        }
+
+        return true
+    }else{
+        return false
+    }
+}
+
+function cardinalRangerCanMoveToTile(currentRow, currentCol, targetRow, targetCol, board){
+    return rangerCanMoveToTile(
+        (rowDiff, colDiff) => rowDiff === 0 ^ colDiff === 0,
+        currentRow, currentCol, targetRow, targetCol, board
+    )
+}
+
+function diagonalRangerCanMoveToTile(currentRow, currentCol, targetRow, targetCol, board){
+    return rangerCanMoveToTile(
+        (rowDiff, colDiff) => rowDiff !== 0 && Math.abs(rowDiff) === Math.abs(colDiff),
+        currentRow, currentCol, targetRow, targetCol, board
+    )
+}
+
 function checkerMoveToTile(piece, currentRow, currentCol, targetRow, targetCol, board){
     board[targetRow][targetCol] = piece
     board[currentRow][currentCol] = null
@@ -45,4 +84,7 @@ function chessMoveToTile(piece, currentRow, currentCol, targetRow, targetCol, bo
     }
 }
 
-export {chessPieceAtTile, omniCheckerCanMoveToTile, checkerMoveToTile, chessMoveToTile}
+export {
+    chessPieceAtTile, omniCheckerCanMoveToTile, cardinalRangerCanMoveToTile, diagonalRangerCanMoveToTile,
+    checkerMoveToTile, chessMoveToTile
+}

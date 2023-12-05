@@ -1,3 +1,4 @@
+import {CheckerQueen} from "./checkerQueen.js"
 import {checkerMoveToTile, omniCheckerCanMoveToTile} from "./pieceUtil.js"
 
 class Checker{
@@ -13,7 +14,7 @@ class Checker{
         const capture = checkerMoveToTile(this, currentRow, currentCol, targetRow, targetCol, board)
 
         if(targetRow === 7){
-            board[targetRow][targetCol] = new CheckerQueenQueen()
+            board[targetRow][targetCol] = new CheckerQueen()
         }
 
         return capture

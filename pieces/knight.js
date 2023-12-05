@@ -16,7 +16,7 @@ class Knight{
     }
 
     moveToTile(currentRow, currentCol, targetRow, targetCol, board){
-        chessMoveToTile(this, currentRow, currentCol, targetRow, targetCol, board)
+        return chessMoveToTile(this, currentRow, currentCol, targetRow, targetCol, board)
     }
 }
 
