@@ -9,16 +9,17 @@ body {
     margin-top: 1%;
     text-align: center;
     font-size: 300%;
+    color: #e4e4e4;
     font-family: "Monaco";
     font-weight: bold;
 }
 
 #chessWord {
-    color: #d2b702;
+    color: #FFDD00;
 }
 
 #checkersWord {
-    color: #5376b0;
+    color: #6D9EEB;
 }
 
 #game {

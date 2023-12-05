@@ -27,7 +27,7 @@ PIECE_CLASSES[R] = Rook
 PIECE_CLASSES[Q] = Queen
 PIECE_CLASSES[KG] = King
 
-/*const BOARD_LAYOUT = [
+const BOARD_LAYOUT = [
     [CQ, CQ, CQ, CQ, CQ, CQ, CQ, CQ],
     [C, C, C, C, C, C, C, C],
     [E, E, E, E, E, E, E, E],
@@ -36,17 +36,6 @@ PIECE_CLASSES[KG] = King
     [E, E, E, E, E, E, E, E],
     [P, P, P, P, P, P, P, P],
     [R, KT, B, Q, KG, B, KT, R]
-]*/
-
-const BOARD_LAYOUT = [
-    [E, E, E, E, E, E, E, E],
-    [E, E, E, E, E, E, E, E],
-    [E, E, E, CQ, E, E, E, E],
-    [E, E, E, E, E, E, E, E],
-    [E, E, E, E, KG, E, E, E],
-    [E, E, E, E, E, E, E, E],
-    [E, E, E, E, E, E, E, E],
-    [E, E, E, E, E, E, E, E],
 ]
 
 const SELECTED_COLOR_LIGHT = "#79c746"
