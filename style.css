@@ -62,7 +62,7 @@ body {
     z-index: 0;
 }
 
-#panel {
+.panel {
     width: 12%;
     margin-left: 75%;
     padding: 1%;
@@ -85,4 +85,13 @@ body {
 
 #reset:hover {
     background-color: #951010;
+}
+
+#instructions {
+    margin-top: 2%;
+}
+
+#instructionList {
+    padding-top: 5%;
+    font-size: 75%
 }
